@@ -1,4 +1,4 @@
-from .conf import prefix, RepoList
+from .conf import prefix, RepoList, version as v
 from invoke import Context
 from loguru import logger
 
