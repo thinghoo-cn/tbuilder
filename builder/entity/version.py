@@ -7,5 +7,5 @@ class Version:
     y: int
     z: int
 
-    def get_full(self, split='.') -> str:
-        return f'v{self.x}{split}{self.y}{split}{self.z}'
+    def get_full(self, split=".") -> str:
+        return f"v{self.x}{split}{self.y}{split}{self.z}"

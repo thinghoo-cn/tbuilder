@@ -6,11 +6,10 @@ from invoke import Context
 from loguru import logger
 
 
-
 def save_image():
     c = Context()
-    image_list: List[str] = ['app', 'nginx']
-    image_list = [ f'{prefix}_{name}' for name in image_list ]
+    image_list: List[str] = ["app", "nginx"]
+    image_list = [f"{prefix}_{name}" for name in image_list]
 
     image_path = pathlib.Path(f"/root/services/images/{version.get_full('_')}")
     if not image_path.exists():
@@ -23,15 +22,15 @@ def save_image():
 
             is_tag = False
             if is_tag:
-            # make tag of latest image.
-                tag_command = f'docker tag {image}:latest {current_version}'
+                # make tag of latest image.
+                tag_command = f"docker tag {image}:latest {current_version}"
                 c.run(tag_command)
-                logger.info(f'Image tagged: {tag_command}')
+                logger.info(f"Image tagged: {tag_command}")
 
-            save_command = (f'docker save {current_version} | gzip > {filename_version}')
+            save_command = f"docker save {current_version} | gzip > {filename_version}"
             # run command
             c.run(save_command)
-            logger.info(f'Image saved: {save_command}')
+            logger.info(f"Image saved: {save_command}")
 
 
 def main():
