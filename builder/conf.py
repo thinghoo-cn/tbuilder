@@ -15,3 +15,5 @@ RepoList: List[Repo] = [
     Repo(folder='./qms_backend', hash='test', image='app', key=True),
     Repo(folder='./', hash='test', image='nginx', key=False),
 ]
+
+KEY_NAME = "~/.ssh/id_rsa"
