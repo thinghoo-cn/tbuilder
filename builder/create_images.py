@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from .conf import version, prefix, IMAGE_FOLDER
+from .conf import version, conf, IMAGE_FOLDER
 import pathlib
 from typing import List
 from invoke import Context
@@ -9,7 +9,7 @@ from loguru import logger
 def save_image():
     c = Context()
     image_list: List[str] = ["app", "nginx"]
-    image_list = [f"{prefix}_{name}" for name in image_list]
+    image_list = [f"{conf.get_prefix()}_{name}" for name in image_list]
 
     image_path = pathlib.Path(f"{IMAGE_FOLDER}/{version.get_full('_')}")
     if not image_path.exists():
