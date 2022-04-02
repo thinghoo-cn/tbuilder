@@ -17,3 +17,5 @@ RepoList: List[Repo] = [
 ]
 
 KEY_NAME = "~/.ssh/id_rsa"
+
+IMAGE_FOLDER = "/root/services/images"

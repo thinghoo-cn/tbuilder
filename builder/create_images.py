@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from .conf import version, prefix
+from .conf import version, prefix, IMAGE_FOLDER
 import pathlib
 from typing import List
 from invoke import Context
@@ -11,7 +11,7 @@ def save_image():
     image_list: List[str] = ["app", "nginx"]
     image_list = [f"{prefix}_{name}" for name in image_list]
 
-    image_path = pathlib.Path(f"/root/services/images/{version.get_full('_')}")
+    image_path = pathlib.Path(f"{IMAGE_FOLDER}/{version.get_full('_')}")
     if not image_path.exists():
         image_path.mkdir()
 
