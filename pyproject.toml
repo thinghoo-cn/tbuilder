@@ -1,21 +1,17 @@
-[project]
-name = ""
-version = ""
+[tool.poetry]
+name = "infras_builder"
+version = "0.1.0"
 description = ""
-authors = [
-    {name = "svtter", email = "svtter@qq.com"},
-]
-license-expression = "MIT"
-dependencies = [
-    "invoke>=1.7.0",
-    "loguru>=0.6.0",
-]
-requires-python = ">=3.9"
+authors = ["svtter <svtter@qq.com>"]
 
-[project.urls]
-Homepage = ""
-[tool.pdm]
+[tool.poetry.dependencies]
+python = "^3.8"
+invoke = "^1.7.0"
+loguru = "^0.6.0"
+GitPython = "^3.1.27"
+
+[tool.poetry.dev-dependencies]
 
 [build-system]
-requires = ["pdm-pep517>=0.12.0"]
-build-backend = "pdm.pep517.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

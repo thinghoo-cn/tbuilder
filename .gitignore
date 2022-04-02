@@ -4,6 +4,8 @@ venv/*
 
 envfiles.tasks.py.swp
 
+.venv
+
 data
 
 envfiles/qms/.dev.env
