@@ -25,3 +25,5 @@ envfiles
 
 
 __pypackages__
+
+.vscode
