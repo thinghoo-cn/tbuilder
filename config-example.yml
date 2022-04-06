@@ -1,0 +1,16 @@
+name: qms_backend
+version: 0.1.0
+key_file: ~/.ssh/id_rsa
+image_folder: /root/services/images
+
+repo_list:
+  - name: backend
+    folder: ./qms_backend
+    hash: test
+    image: app
+    key: true
+  - name: frontend
+    folder: ./
+    hash: test
+    image: app
+    key: true
