@@ -15,6 +15,27 @@ if not os.getenv("DEBUG", False):
     logger.add('info.log')
 
 
+EXAMPLE_FILE = """
+name: qms_backend
+version: 0.1.0
+key_file: ~/.ssh/id_rsa
+image_folder: /root/services/images
+prefix: qms-compose
+
+repo_list:
+  - name: backend
+    folder: ./qms_backend
+    hash: test
+    image: app
+    key: true
+  - name: frontend
+    folder: ./
+    hash: test
+    image: nginx
+    key: true
+"""
+
+
 def get_current_repo() -> Repo:
     try:
         current_repo = Repo('.')
@@ -22,6 +43,9 @@ def get_current_repo() -> Repo:
     except InvalidGitRepositoryError:
         logger.error('not a valid git repo.')
         sys.exit(1)
+
+
+current_repo = get_current_repo()
 
 
 @dataclass_json
@@ -40,10 +64,20 @@ class Config:
         for r in self.repo_list:
             yield r.image
 
+    @staticmethod
+    def gen():
+        path = './config.yml'
+        logger.info(f'write to {path}')
+        p = pathlib.Path(path)
+        with p.open('w'):
+            p.write_text(EXAMPLE_FILE)
+
     @classmethod
     def load_config(cls) -> 'Config':
         config_path = pathlib.Path('./config.yml')
-        assert config_path.exists(), 'must have config.yml'
+        if not config_path.exists():
+            logger.critical('config.yml not exist. generate!')
+            cls.gen()
         with config_path.open() as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         return Config.from_dict(data)
