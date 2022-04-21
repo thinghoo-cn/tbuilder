@@ -1,6 +1,5 @@
-from .conf import conf, RepoList, version as v, KEY_NAME
+from .conf import logger, conf, RepoList, version as v, KEY_NAME
 from invoke import Context
-from loguru import logger
 
 
 def build():

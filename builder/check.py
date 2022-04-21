@@ -5,13 +5,10 @@ from git import Repo
 # For all you know, the first argument to Repo is a path to the repository
 # you want to work with
 
-def main():
-    repo = Repo(".")
+
+def check(repo: Repo):
+    # duplicate
     assert not repo.bare
 
     for r in repo.submodules:
         print(r.name, ':', r.module().head.commit)
-
-
-if __name__ == '__main__':
-    main()
