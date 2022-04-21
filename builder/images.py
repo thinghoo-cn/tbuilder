@@ -1,6 +1,5 @@
-from .conf import logger, conf, repo_list
+from .conf import logger, conf, repo_manager
 from invoke import Context
-import pathlib
 from typing import List
 
 
@@ -8,7 +7,7 @@ def build():
     """
     构建镜像
     """
-    for r in repo_list:
+    for r in repo_manager.repo_list:
         c = Context()
         with c.cd(r.folder):
             full_image_name = f"{conf.get_prefix()}_{r.image}"
@@ -28,12 +27,11 @@ def save_image():
     保存镜像
     """
     c = Context()
-    image_list: List[str] = ["app", "nginx"]
+    image_list: List[str] = repo_manager.get_image_list()
     image_list = [f"{conf.get_prefix()}_{name}" for name in image_list]
 
-    image_path = pathlib.Path(f"{conf.IMAGE_FOLDER}/{conf.version.get_full('_')}")
-    if not image_path.exists():
-        image_path.mkdir()
+    # 生成镜像版本路径
+    image_path = conf.generate_image_version_path()
 
     with c.cd(str(image_path)):
         for image in image_list:
