@@ -17,7 +17,7 @@ def show_hash(repo: Repo):
     if not repo.submodules:
         logger.info('no submodules.')
     for r in repo.submodules:
-        logger.info(r.name, ':', r.module().head.commit)
+        logger.info(r.name + ':' + r.module().head.commit)
 
 
 def select_version():
