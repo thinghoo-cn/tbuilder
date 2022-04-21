@@ -6,7 +6,7 @@ from .entity.all import Version, Repo
 
 version = Version(0, 1, 6)
 
-RepoList: List[Repo] = [
+repo_list: List[Repo] = [
     Repo(folder="./qms_backend", hash="test", image="app", key=True),
     Repo(folder="./", hash="test", image="nginx", key=False),
 ]

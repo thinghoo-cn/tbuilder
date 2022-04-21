@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from invoke import Context
-from .conf import RepoList, logger
+from .conf import repo_list, logger
 from git import Repo
 
 # repo is a Repo instance pointing to the git-python repository.
@@ -8,7 +8,10 @@ from git import Repo
 # you want to work with
 
 
-def show_version(repo: Repo):
+def show_hash(repo: Repo):
+    """
+    展示子模块 hash
+    """
     assert not repo.bare
 
     for r in repo.submodules:
@@ -16,7 +19,10 @@ def show_version(repo: Repo):
 
 
 def select_version():
-    for repo in RepoList:
+    """
+    调整子模块版本
+    """
+    for repo in repo_list:
         c = Context()
         with c.cd(repo.folder):
             c.run(f"git reset --hard {repo.hash}")

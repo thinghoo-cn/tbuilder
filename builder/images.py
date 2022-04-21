@@ -1,4 +1,4 @@
-from .conf import logger, conf, RepoList, version as v, KEY_NAME, IMAGE_FOLDER
+from .conf import logger, conf, repo_list, version as v, KEY_NAME, IMAGE_FOLDER
 from invoke import Context
 import pathlib
 from typing import List
@@ -8,7 +8,7 @@ def build():
     """
     构建镜像
     """
-    for r in RepoList:
+    for r in repo_list:
         c = Context()
         with c.cd(r.folder):
             full_image_name = f"{conf.get_prefix()}_{r.image}"
