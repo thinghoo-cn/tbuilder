@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Repo:
+class RepoInstance:
     folder: str
     hash: str
     image: str
