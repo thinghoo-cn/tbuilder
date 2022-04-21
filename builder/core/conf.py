@@ -89,11 +89,7 @@ class Config:
         """
         获取镜像的 prefix
         """
-        if self.is_mes:
-            prefix = "mes-compose"
-        else:
-            prefix = "qms-compose"
-        return prefix
+        return self.prefix
 
     def generate_image_version_path(self) -> pathlib.Path:
         """
