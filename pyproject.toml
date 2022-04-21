@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "infras_builder"
+name = "builder"
 version = "0.1.0"
 description = ""
 authors = ["svtter <svtter@qq.com>"]
@@ -10,6 +10,10 @@ invoke = "^1.7.0"
 loguru = "^0.6.0"
 GitPython = "^3.1.27"
 PyYAML = "^6.0"
+click = "^8.1.2"
+
+[tool.poetry.scripts]
+tbuilder = "builder.__main__:cli"
 
 [tool.poetry.dev-dependencies]
 

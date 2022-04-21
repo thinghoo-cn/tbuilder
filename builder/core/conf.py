@@ -1,16 +1,27 @@
 import os
 import pathlib
+import sys
 from dataclasses import dataclass
 from typing import Iterable, Tuple
 
 import yaml
 from dataclasses_json import dataclass_json
 from loguru import logger
+from git import Repo, InvalidGitRepositoryError
 
 from .entity.all import RepoInstance, Version
 
 if not os.getenv("DEBUG", False):
     logger.add('info.log')
+
+
+def get_current_repo() -> Repo:
+    try:
+        current_repo = Repo('.')
+        return current_repo
+    except InvalidGitRepositoryError:
+        logger.error('not a valid git repo.')
+        sys.exit(1)
 
 
 @dataclass_json
