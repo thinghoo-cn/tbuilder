@@ -3,6 +3,8 @@ import pathlib
 from dataclasses import dataclass
 from typing import Iterable, Tuple
 
+import yaml
+from dataclasses_json import dataclass_json
 from loguru import logger
 
 from .entity.all import RepoInstance, Version
@@ -11,8 +13,13 @@ if not os.getenv("DEBUG", False):
     logger.add('info.log')
 
 
+@dataclass_json
 @dataclass
-class RepoManager:
+class Config:
+    key_file: str
+    image_folder: str
+    prefix: str
+    version: str
     repo_list: Tuple[RepoInstance] = (
         RepoInstance(folder="./qms_backend", hash="test", image="app", key=True),
         RepoInstance(folder="./", hash="test", image="nginx", key=False),
@@ -22,13 +29,16 @@ class RepoManager:
         for r in self.repo_list:
             yield r.image
 
+    @classmethod
+    def load_config(cls) -> 'Config':
+        config_path = pathlib.Path('./config.yml')
+        assert config_path, 'must have config.yml'
+        with config_path.open() as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+        return Config.from_dict(data)
 
-@dataclass
-class Config:
-    KEY_NAME: str = "~/.ssh/id_rsa"
-    IMAGE_FOLDER: str = "/root/services/images"
-    is_mes = False
-    version = Version(0, 1, 6)
+    def get_version(self) -> Version:
+        return Version.parse_str(self.version)
 
     def get_prefix(self) -> str:
         """
@@ -44,11 +54,10 @@ class Config:
         """
         生成镜像+版本的路径
         """
-        image_path = pathlib.Path(f"{self.IMAGE_FOLDER}/{self.version.get_full('_')}")
+        image_path = pathlib.Path(f"{self.image_folder}/{self.get_version().get_full('_')}")
         if not image_path.exists():
             image_path.mkdir()
         return image_path
 
 
-conf = Config()
-repo_manager = RepoManager()
+CONFIG: Config = Config.load_config()

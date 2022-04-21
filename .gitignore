@@ -27,3 +27,6 @@ envfiles
 __pypackages__
 
 .vscode
+
+config.yml
+info.log

@@ -1,3 +1,6 @@
+from ..conf import Config, Version
+
 
 def test_load_config():
-    pass
+    c: Config = Config.load_config()
+    assert c.get_version() == Version(0, 1, 0)
