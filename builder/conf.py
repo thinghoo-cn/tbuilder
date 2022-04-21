@@ -31,6 +31,9 @@ class Config:
     version = Version(0, 1, 6)
 
     def get_prefix(self) -> str:
+        """
+        获取镜像的 prefix
+        """
         if self.is_mes:
             prefix = "mes-compose"
         else:
@@ -38,6 +41,9 @@ class Config:
         return prefix
 
     def generate_image_version_path(self) -> pathlib.Path:
+        """
+        生成镜像+版本的路径
+        """
         image_path = pathlib.Path(f"{self.IMAGE_FOLDER}/{self.version.get_full('_')}")
         if not image_path.exists():
             image_path.mkdir()
