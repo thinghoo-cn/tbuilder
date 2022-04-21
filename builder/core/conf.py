@@ -43,7 +43,7 @@ class Config:
     @classmethod
     def load_config(cls) -> 'Config':
         config_path = pathlib.Path('./config.yml')
-        assert config_path, 'must have config.yml'
+        assert config_path.exists(), 'must have config.yml'
         with config_path.open() as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         return Config.from_dict(data)
