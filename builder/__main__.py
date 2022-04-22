@@ -2,7 +2,7 @@ import pathlib
 
 import click
 from .core.conf import current_repo, logger, CONFIG
-from .core.version import show_hash
+from .core.version import show_hash, check_hash
 from .core.images import build as image_build, save_image
 
 
@@ -11,6 +11,7 @@ from .core.images import build as image_build, save_image
 def cli(cmd):
     if cmd == 'check':
         show_hash(current_repo)
+        check_hash(current_repo)
     elif cmd == 'build':
         image_build()
     elif cmd == 'save':
