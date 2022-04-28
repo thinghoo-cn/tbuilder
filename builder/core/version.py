@@ -21,18 +21,6 @@ def show_hash(repo: Repo):
         logger.info(r.name + ': ' + str(r.module().head.commit))
 
 
-def check_hash(repo: Repo):
-    for sub_r in repo.submodules:
-        find = False
-        for config_r in CONFIG.repo_list:
-            if sub_r.name == config_r.folder:
-                find = True
-                if sub_r.module().head.commit != config_r.hash:
-                    raise HashInvalidError(f'f{sub_r.module().head.commit} != {config_r.hash}')
-        if not find:
-            raise BuilderError(f'submodule {sub_r.name} not found.')
-
-
 def select_version():
     """
     调整子模块版本

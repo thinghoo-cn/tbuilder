@@ -7,3 +7,4 @@ class RepoInstance:
     hash: str
     image: str
     key: bool
+    name: str = ""
