@@ -3,6 +3,7 @@ version: 0.1.0
 key_file: ~/.ssh/id_rsa
 image_folder: /root/services/images
 prefix: qms-compose
+cache: false
 
 repo_list:
   - name: backend

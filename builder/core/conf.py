@@ -55,7 +55,8 @@ class Config:
     image_folder: str
     prefix: str
     version: str
-    repo_list: Tuple[RepoInstance] = (
+    cache: bool = False
+    repo_list: Tuple[RepoInstance, RepoInstance] = (
         RepoInstance(folder="./qms_backend", hash="test", image="app", key=True),
         RepoInstance(folder="./", hash="test", image="nginx", key=False),
     )
