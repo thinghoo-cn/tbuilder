@@ -12,7 +12,7 @@ def build():
         with c.cd(r.folder):
             full_image_name = f"{CONFIG.get_prefix()}_{r.image}"
             key_param = f'--build-arg ssh_prv_key="$(cat {CONFIG.key_file})"'
-            cache_opt = '' if CONFIG.cache else 'no-cache'
+            cache_opt = '' if CONFIG.cache else '--no-cache'
             if r.key:
                 full_cmd = f"docker build {cache_opt} {key_param} -t {full_image_name}:{CONFIG.get_version().get_full()} ."
             else:
