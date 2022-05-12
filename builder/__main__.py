@@ -1,3 +1,4 @@
+from ensurepip import version
 import sys
 import argparse
 from .core.conf import logger, Config, get_current_repo
@@ -9,15 +10,19 @@ from .core.httpserver import start_http
 
 def cli():
     parser = argparse.ArgumentParser(description='tbuilder is an application to build image.')
-    parser.add_argument('cmd', choices=['check', 'build', 'save', 'gen', 'show', 'http'],
+    parser.add_argument('cmd', choices=['check', 'build', 'save', 'gen', 'show', 'http', 'version'],
                         help='select one command to run.')
     parser.add_argument('--username', type=str, help='http server username')
     parser.add_argument('--password', type=str, help='http server password')
     parser.add_argument('--port', type=int, help='http server port.')
-    # parser.add_argument('--version, -v', help='print version')
 
     args = parser.parse_args()
-    if args.cmd == 'http':
+
+    if args.cmd or args.version:
+        import pkg_resources
+        builder = pkg_resources.require('builder')
+        logger.info(f'tbuilder(builder) version is: {builder[0].version}')
+    elif args.cmd == 'http':
         start_http(USERNAME=args.username, PASSWORD=args.password, port=args.port)
         sys.exit(0)
     else:
