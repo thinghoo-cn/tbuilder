@@ -1,26 +1,26 @@
-import click
+import argparse
+from doctest import debug_script
 from .core.conf import current_repo, logger, CONFIG
 from .core.version import show_hash
 from .core.hash_checker import HashChecker
 from .core.images import build as image_build, save_image
 
 
-@click.command()
-@click.argument('cmd', type=str, default='check')
-def cli(cmd):
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='tbuilder is an application to build image.')
+    parser.add_argument('cmd', choices=['check', 'build', 'save', 'gen', 'show'],
+                        help='select one command to run.')
+    args = parser.parse_args()
+
     checker = HashChecker(current_repo)
     checker.check_hash()
-    if cmd == 'check':
+    if args.cmd == 'check':
         show_hash(current_repo)
-    elif cmd == 'build':
+    elif args.cmd == 'build':
         image_build()
-    elif cmd == 'save':
+    elif args.cmd == 'save':
         save_image()
-    elif cmd == 'gen':
+    elif args.cmd == 'gen':
         CONFIG.gen()
-    elif cmd == 'show':
+    elif args.cmd == 'show':
         logger.info(CONFIG.repo_list)
-
-
-if __name__ == '__main__':
-    cli()
