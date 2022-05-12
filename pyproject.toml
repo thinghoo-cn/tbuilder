@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "builder"
-version = "0.2.1"
+version = "0.2.2"
 description = ""
 authors = ["svtter <svtter@qq.com>"]
 
