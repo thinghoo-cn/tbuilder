@@ -45,9 +45,6 @@ def get_current_repo() -> Repo:
         sys.exit(1)
 
 
-current_repo = get_current_repo()
-
-
 @dataclass_json
 @dataclass
 class Config:
