@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from invoke import Context
-from .conf import logger, CONFIG
+from .conf import logger, Config
 from git import Repo
 from .error import HashInvalidError, BuilderError
 
@@ -21,15 +21,11 @@ def show_hash(repo: Repo):
         logger.info(r.name + ': ' + str(r.module().head.commit))
 
 
-def select_version():
+def select_version(config: Config):
     """
     调整子模块版本
     """
-    for repo in CONFIG.repo_list:
+    for repo in config.repo_list:
         c = Context()
         with c.cd(repo.folder):
             c.run(f"git reset --hard {repo.hash}")
-
-
-if __name__ == "__main__":
-    select_version()

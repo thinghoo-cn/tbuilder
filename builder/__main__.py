@@ -1,8 +1,6 @@
+import sys
 import argparse
-from ast import arg
-from tracemalloc import start
-from xml.etree.ElementInclude import default_loader
-from .core.conf import current_repo, logger, CONFIG
+from .core.conf import current_repo, logger, Config
 from .core.version import show_hash
 from .core.hash_checker import HashChecker
 from .core.images import build as image_build, save_image
@@ -18,19 +16,20 @@ if __name__ == '__main__':
     parser.add_argument('--port', type=int, help='http server port.')
 
     args = parser.parse_args()
+    if args.cmd == 'http':
+        start_http(USERNAME=args.username, PASSWORD=args.password, port=args.port)
+        sys.exit(0)
 
-    checker = HashChecker(current_repo)
+    CONFIG: Config = Config.load_config()
+    checker = HashChecker(current_repo, config=CONFIG)
     checker.check_hash()
     if args.cmd == 'check':
         show_hash(current_repo)
     elif args.cmd == 'build':
-        image_build()
+        image_build(config=CONFIG)
     elif args.cmd == 'save':
-        save_image()
+        save_image(config=CONFIG)
     elif args.cmd == 'gen':
         CONFIG.gen()
     elif args.cmd == 'show':
         logger.info(CONFIG.repo_list)
-    elif args.cmd == 'http':
-        start_http(USERNAME=args.username, PASSWORD=args.password, port=args.port)
-

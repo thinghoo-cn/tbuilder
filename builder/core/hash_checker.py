@@ -1,13 +1,14 @@
 from git import Repo
 
-from builder.core.conf import CONFIG
+from builder.core.conf import Config
 from builder.core.entity.repo_instance import RepoInstance
 from builder.core.error import BuilderError, HashInvalidError
 
 
 class HashChecker:
-    def __init__(self, repo: Repo):
+    def __init__(self, repo: Repo, config: Config):
         self.repo = repo
+        self.config = config
 
     @staticmethod
     def check_equal(sub_r, config: RepoInstance):
@@ -21,7 +22,7 @@ class HashChecker:
         """
         for sub_r in self.repo.submodules:
             find = False
-            for config_r in CONFIG.repo_list:
+            for config_r in self.config.repo_list:
                 if sub_r.name == config_r.name:
                     find = True
                     self.check_equal(sub_r, config_r)

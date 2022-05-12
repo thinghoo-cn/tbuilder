@@ -102,4 +102,3 @@ class Config:
         return image_path
 
 
-CONFIG: Config = Config.load_config()
