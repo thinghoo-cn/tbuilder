@@ -7,6 +7,21 @@
 
 `pip install -e .`
 
+## RUN
+
+```bash
+usage: __main__.py [-h] {check,build,save,gen,show}
+
+tbuilder is an application to build image.
+
+positional arguments:
+  {check,build,save,gen,show}
+                        select one command to run.
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
+
 
 ## LICENSE
 

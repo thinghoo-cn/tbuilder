@@ -1,5 +1,4 @@
 import argparse
-from doctest import debug_script
 from .core.conf import current_repo, logger, CONFIG
 from .core.version import show_hash
 from .core.hash_checker import HashChecker
