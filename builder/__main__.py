@@ -19,7 +19,7 @@ def cli():
 
     args = parser.parse_args()
 
-    if args.cmd or args.version:
+    if args.cmd == 'version' or args.version:
         import pkg_resources
         builder = pkg_resources.require('builder')
         logger.info(f'tbuilder(builder) version is: {builder[0].version}')
