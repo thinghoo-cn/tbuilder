@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 from git import Repo
 from invoke import Context
-from typing import List, Literal
 
-from .conf import Config, logger
+from .conf import Config, logger, STAGE_CONSTRAINT
 from .error import BuilderError, HashInvalidError
 
 # repo is a Repo instance pointing to the git-python repository.
@@ -36,7 +35,7 @@ class VersionHandler:
             with c.cd(repo.folder):
                 c.run(f"git reset --hard {repo.hash}")
 
-    def update_repos(self, stage: Literal['master', 'test', 'prd', 'demo', 'dev']):
+    def update_repos(self, stage: STAGE_CONSTRAINT):
         """按照分支，更新 compose 内部的代码
         """
         logger.info('update repos ...')

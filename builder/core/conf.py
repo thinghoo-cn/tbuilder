@@ -2,7 +2,7 @@ import os
 import pathlib
 import sys
 from dataclasses import dataclass
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, List, Literal
 
 import yaml
 from dataclasses_json import dataclass_json
@@ -34,6 +34,8 @@ repo_list:
     image: nginx
     key: true
 """
+
+STAGE_CONSTRAINT = Literal['master', 'test', 'prd', 'demo', 'dev']
 
 
 def get_current_repo() -> Repo:

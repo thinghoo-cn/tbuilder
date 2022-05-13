@@ -1,6 +1,6 @@
 import sys
 import argparse
-from .core.conf import logger, Config, get_current_repo
+from .core.conf import STAGE_CONSTRAINT, logger, Config, get_current_repo
 from .core.version import VersionHandler
 from .core.hash_checker import HashChecker
 from .core.images import build as image_build, save_image
@@ -14,6 +14,8 @@ def cli():
     parser.add_argument('--username', type=str, help='http server username')
     parser.add_argument('--password', type=str, help='http server password')
     parser.add_argument('--port', type=int, help='http server port.')
+    parser.add_argument('--stage', type=str, choices=['master', 'test', 'prd', 'demo', 'dev'],
+                        help='stage information.')
 
     args = parser.parse_args()
 
