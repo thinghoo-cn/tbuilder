@@ -32,8 +32,8 @@ def cli():
 
         checker = HashChecker(current_repo, config=CONFIG)
         v_h = VersionHandler(current_repo)
-        checker.check_hash()
         if args.cmd == 'check':
+            checker.check_hash()
             v_h.show_hash()
         elif args.cmd == 'build':
             image_build(config=CONFIG)
