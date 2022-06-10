@@ -38,6 +38,7 @@ class VersionHandler:
     def update_repos(self, stage: STAGE_CONSTRAINT):
         """按照分支，更新 compose 内部的代码
         """
+        assert stage, 'stage must be exist.'
         logger.info('update repos ...')
         from datetime import datetime
         c = Context()

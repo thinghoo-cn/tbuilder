@@ -1,4 +1,5 @@
 from git import Repo
+from .conf import logger
 
 from builder.core.conf import Config
 from builder.core.entity.repo_instance import RepoInstance
