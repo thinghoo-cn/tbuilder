@@ -14,7 +14,7 @@ def build(config: Config):
             key_param = f'--build-arg ssh_prv_key="$(cat {config.key_file})"'
             cache_opt = '' if config.cache else '--no-cache'
 
-            full_cmd = f"docker build {cache_opt} {secret_param}"
+            full_cmd = f"DOCKER_BUILDKIT=1 docker build {cache_opt} {secret_param}"
             if r.key:
                 full_cmd = f"{full_cmd} {key_param} -t {full_image_name}:{config.get_version().get_full()} ."
             else:
