@@ -1,5 +1,22 @@
+from builder.core.entity.repo_instance import RepoInstance
 from .conf import logger, Config
 from invoke import Context
+
+
+def generate_cmd(config: Config, r: RepoInstance) -> str:
+    full_image_name = f"{config.get_prefix()}_{r.image}"
+    secret_param = f'--secret id=netrc,src=$HOME/.netrc'
+    key_param = f'--build-arg ssh_prv_key="$(cat {config.key_file})"'
+    cache_opt = '' if config.cache else '--no-cache'
+
+    full_cmd = f"DOCKER_BUILDKIT=1 docker build {cache_opt} {secret_param}"
+    if r.key:
+        full_cmd = f"{full_cmd} {key_param} -t {full_image_name}:{config.get_version().get_full()} ."
+    else:
+        full_cmd = (
+            f"{full_cmd} -t {full_image_name}:{config.get_version().get_full()} ."
+        )
+    return full_cmd
 
 
 def build(config: Config):
@@ -9,18 +26,7 @@ def build(config: Config):
     for r in config.repo_list:
         c = Context()
         with c.cd(r.folder):
-            full_image_name = f"{config.get_prefix()}_{r.image}"
-            secret_param = f'--secret id=netrc,src=$HOME/.netrc'
-            key_param = f'--build-arg ssh_prv_key="$(cat {config.key_file})"'
-            cache_opt = '' if config.cache else '--no-cache'
-
-            full_cmd = f"DOCKER_BUILDKIT=1 docker build {cache_opt} {secret_param}"
-            if r.key:
-                full_cmd = f"{full_cmd} {key_param} -t {full_image_name}:{config.get_version().get_full()} ."
-            else:
-                full_cmd = (
-                    f"{full_cmd} -t {full_image_name}:{config.get_version().get_full()} ."
-                )
+            full_cmd = generate_cmd(config=config, r=r)
             logger.info("run: " + full_cmd)
             c.run(full_cmd)
 
