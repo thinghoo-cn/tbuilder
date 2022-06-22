@@ -1,5 +1,5 @@
 from builder.core.entity.repo_instance import RepoInstance
-from .conf import logger, Config
+from .conf import logger, Config, image_registry, is_tag, is_save_local
 from invoke import Context
 
 
@@ -52,14 +52,16 @@ def save_image(config: Config):
             current_version = f'{image}:{config.get_version().get_full(split=".")}'
             filename_version = f'{image}_{config.get_version().get_full(split="_")}.tgz'
 
-            is_tag = False
             if is_tag:
                 # make tag of latest image.
-                tag_command = f"docker tag {image}:latest {current_version}"
+                tagged_name = f"{image_registry}/{config.name}/{current_version}"
+                tag_command = f"docker tag {current_version} {tagged_name}"
                 c.run(tag_command)
-                logger.info(f"Image tagged: {tag_command}")
+                c.run(f'docker push {tagged_name}')
+                logger.info(f"Image pushed: {tag_command}")
 
-            save_command = f"docker save {current_version} | gzip > {filename_version}"
-            # run command
-            c.run(save_command)
-            logger.info(f"Image saved: {save_command}")
+            if is_save_local:
+                save_command = f"docker save {current_version} | gzip > {filename_version}"
+                # run command
+                c.run(save_command)
+                logger.info(f"Image saved: {save_command}")

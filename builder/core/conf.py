@@ -51,6 +51,7 @@ def get_current_repo() -> Repo:
 @dataclass_json
 @dataclass
 class Config:
+    name: str
     key_file: str
     image_folder: str
     prefix: str
@@ -102,3 +103,8 @@ class Config:
         return image_path
 
 
+image_registry = 'harbor.beijing-epoch.com'
+
+# make save image tagged.
+is_tag = False
+is_save_local = True
