@@ -1,9 +1,11 @@
 import sys
 import argparse
+
+from dataclasses_json import config
 from .core.conf import STAGE_CONSTRAINT, logger, Config, get_current_repo
 from .core.version import VersionHandler
 from .core.hash_checker import HashChecker
-from .core.images import build as image_build, save_image
+from .core.images import ImageManager
 from .core.httpserver import start_http
 
 
@@ -33,15 +35,17 @@ def cli():
 
         checker = HashChecker(current_repo, config=CONFIG)
         v_h = VersionHandler(current_repo)
+        i_m = ImageManager(config=CONFIG)
+
         if args.cmd == 'check':
             checker.check_hash()
             v_h.show_hash()
         elif args.cmd == 'build':
             checker.check_hash()
             v_h.show_hash()
-            image_build(config=CONFIG)
+            i_m.build()
         elif args.cmd == 'save':
-            save_image(config=CONFIG)
+            i_m.save()
         elif args.cmd == 'gen':
             CONFIG.gen()
         elif args.cmd == 'show':
