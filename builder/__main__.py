@@ -16,6 +16,7 @@ def cli():
     parser.add_argument('--port', type=int, help='http server port.')
     parser.add_argument('--stage', type=str, choices=['master', 'test', 'prd', 'demo', 'dev'],
                         help='stage information.')
+    # parser.add_argument('--without-check', type=bool, help='build without check', default=False)
 
     args = parser.parse_args()
 
@@ -36,6 +37,8 @@ def cli():
             checker.check_hash()
             v_h.show_hash()
         elif args.cmd == 'build':
+            checker.check_hash()
+            v_h.show_hash()
             image_build(config=CONFIG)
         elif args.cmd == 'save':
             save_image(config=CONFIG)
