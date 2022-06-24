@@ -1,7 +1,8 @@
 # Infras Builder
 
-镜像与版本的快速构建工具。
-注意⚠️：本项目开源并遵从 MIT 协议。
+> 注意⚠️：本项目开源并遵从 MIT 协议。
+
+Quick builder for images and version.
 
 ## Install
 
@@ -22,6 +23,9 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
+## Documentation
+
+Read the [mkdocs](./docs/index.md)
 
 ## LICENSE
 
