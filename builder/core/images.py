@@ -1,5 +1,5 @@
 from builder.core.entity.repo_instance import RepoInstance
-from .conf import logger, Config, image_registry, is_tag, is_save_local
+from .conf import logger, Config, image_registry, is_save_local
 from invoke import Context
 
 
@@ -63,7 +63,7 @@ class ImageManager:
                 current_version = f'{image}:{self.config.get_version().get_full(split=".")}'
                 filename_version = f'{image}_{self.config.get_version().get_full(split="_")}.tgz'
 
-                if is_tag:
+                if self.config.is_tag:
                     # make tag of latest image.
                     tagged_name = f"{image_registry}/{self.config.name}/{current_version}"
                     tag_command = f"docker tag {current_version} {tagged_name}"

@@ -56,10 +56,15 @@ class Config:
     image_folder: str
     prefix: str
     version: str
+
+    # is pushed to registry
+    is_tag: bool = True
+    is_save_local: bool = False
     cache: bool = False
+
     repo_list: Tuple[RepoInstance, RepoInstance] = (
-        RepoInstance(folder="./qms_backend", hash="test", image="app", key=True),
-        RepoInstance(folder="./", hash="test", image="nginx", key=False),
+        RepoInstance(folder="./qms_backend", hash="test", image="app", key='ssh'),
+        RepoInstance(folder="./", hash="test", image="nginx", key='ssh'),
     )
 
     def get_image_list(self) -> Iterable[str]:
@@ -106,5 +111,4 @@ class Config:
 image_registry = 'harbor.beijing-epoch.com'
 
 # make save image tagged.
-is_tag = False
 is_save_local = True

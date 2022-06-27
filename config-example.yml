@@ -4,6 +4,8 @@ key_file: ~/.ssh/id_rsa
 image_folder: /root/services/images
 prefix: qms-compose
 cache: false
+is_save_local: true
+is_tag: true
 
 repo_list:
   - name: backend
