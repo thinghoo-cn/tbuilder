@@ -1,5 +1,5 @@
 from builder.core.entity.repo_instance import RepoInstance
-from .conf import logger, Config, image_registry, is_save_local
+from .conf import logger, Config, image_registry
 from invoke import Context
 
 
@@ -71,7 +71,7 @@ class ImageManager:
                     c.run(f'docker push {tagged_name}')
                     logger.info(f"Image pushed: {tag_command}")
 
-                if is_save_local:
+                if self.config.is_save_local:
                     save_command = f"docker save {current_version} | gzip > {filename_version}"
                     # run command
                     c.run(save_command)

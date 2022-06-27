@@ -109,6 +109,3 @@ class Config:
 
 
 image_registry = 'harbor.beijing-epoch.com'
-
-# make save image tagged.
-is_save_local = True
