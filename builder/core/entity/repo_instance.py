@@ -7,5 +7,5 @@ class RepoInstance:
     folder: str
     hash: str
     image: str
-    key: Literal['ssh', 'netrc', '']
+    key: Literal["ssh", "netrc", ""]
     name: str = ""

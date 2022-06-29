@@ -12,7 +12,7 @@ from git import Repo, InvalidGitRepositoryError
 from .entity.all import RepoInstance, Version
 
 if not os.getenv("DEBUG", False):
-    logger.add('info.log')
+    logger.add("info.log")
 
 
 EXAMPLE_FILE = """
@@ -35,16 +35,15 @@ repo_list:
     key: true
 """
 
-STAGE_CONSTRAINT = Literal['master', 'test', 'prd', 'demo', 'dev']
-
+STAGE_CONSTRAINT = Literal["master", "test", "prd", "demo", "dev"]
 
 
 def get_current_repo() -> Repo:
     try:
-        current_repo = Repo('.')
+        current_repo = Repo(".")
         return current_repo
     except InvalidGitRepositoryError:
-        logger.error('not a valid git repo.')
+        logger.error("not a valid git repo.")
         sys.exit(1)
 
 
@@ -63,8 +62,8 @@ class Config:
     cache: bool = False
 
     repo_list: Tuple[RepoInstance, RepoInstance] = (
-        RepoInstance(folder="./qms_backend", hash="test", image="app", key='ssh'),
-        RepoInstance(folder="./", hash="test", image="nginx", key='ssh'),
+        RepoInstance(folder="./qms_backend", hash="test", image="app", key="ssh"),
+        RepoInstance(folder="./", hash="test", image="nginx", key="ssh"),
     )
 
     def get_image_list(self) -> Iterable[str]:
@@ -73,17 +72,17 @@ class Config:
 
     @staticmethod
     def gen():
-        path = './config.yml'
-        logger.info(f'write to {path}')
+        path = "./config.yml"
+        logger.info(f"write to {path}")
         p = pathlib.Path(path)
-        with p.open('w'):
+        with p.open("w"):
             p.write_text(EXAMPLE_FILE)
 
     @classmethod
-    def load_config(cls) -> 'Config':
-        config_path = pathlib.Path('./config.yml')
+    def load_config(cls) -> "Config":
+        config_path = pathlib.Path("./config.yml")
         if not config_path.exists():
-            logger.critical('config.yml not exist. generate!')
+            logger.critical("config.yml not exist. generate!")
             cls.gen()
         with config_path.open() as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
@@ -102,10 +101,12 @@ class Config:
         """
         生成镜像+版本的路径
         """
-        image_path = pathlib.Path(f"{self.image_folder}/{self.get_version().get_full('_')}")
+        image_path = pathlib.Path(
+            f"{self.image_folder}/{self.get_version().get_full('_')}"
+        )
         if not image_path.exists():
             image_path.mkdir()
         return image_path
 
 
-image_registry = 'harbor.beijing-epoch.com'
+image_registry = "harbor.beijing-epoch.com"

@@ -11,7 +11,6 @@ import base64
 
 def get_handler(AUTH_KEY):
     class BasicAuthHandler(http.server.SimpleHTTPRequestHandler):
-
         def do_HEAD(self):
             self.send_response(200)
             self.send_header("Content-type", "text/html")
@@ -24,7 +23,7 @@ def get_handler(AUTH_KEY):
             self.end_headers()
 
         def do_GET(self):
-            """ Present frontpage with user authentication. """
+            """Present frontpage with user authentication."""
             if self.headers.get("Authorization") == None:
                 self.do_AUTHHEAD()
                 self.wfile.write(b"no auth header received")
@@ -34,6 +33,7 @@ def get_handler(AUTH_KEY):
                 self.do_AUTHHEAD()
                 self.wfile.write(self.headers.get("Authorization").encode())
                 self.wfile.write(b"not authenticated")
+
     return BasicAuthHandler
 
 
@@ -42,10 +42,10 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
 
 
 def start_http(USERNAME, PASSWORD, port):
-    AUTH_KEY = base64.b64encode('{}:{}'.format(USERNAME, PASSWORD).encode()).decode()
-    address = ('', port)
+    AUTH_KEY = base64.b64encode("{}:{}".format(USERNAME, PASSWORD).encode()).decode()
+    address = ("", port)
 
     handler = get_handler(AUTH_KEY=AUTH_KEY)
-    print('server listening at', address)
+    print("server listening at", address)
     with ThreadingHTTPServer(address, handler) as httpd:
         httpd.serve_forever()

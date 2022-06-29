@@ -16,11 +16,10 @@ class HashChecker:
         # 检查 module hash 是否相等
         hash_ = sub_r.module().head.commit
         if str(hash_) != config.hash:
-            raise HashInvalidError(f'{hash_} != {config.hash}')
+            raise HashInvalidError(f"{hash_} != {config.hash}")
 
     def check_hash(self):
-        """
-        """
+        """ """
         for sub_r in self.repo.submodules:
             find = False
             for config_r in self.config.repo_list:
@@ -28,4 +27,4 @@ class HashChecker:
                     find = True
                     self.check_equal(sub_r, config_r)
             if not find:
-                raise BuilderError(f'submodule {sub_r.name} not found.')
+                raise BuilderError(f"submodule {sub_r.name} not found.")

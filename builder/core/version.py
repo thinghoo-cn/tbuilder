@@ -22,9 +22,9 @@ class VersionHandler:
         assert not self.repo.bare
 
         if not self.repo.submodules:
-            logger.info('no submodules.')
+            logger.info("no submodules.")
         for r in self.repo.submodules:
-            logger.info(r.name + ': ' + str(r.module().head.commit))
+            logger.info(r.name + ": " + str(r.module().head.commit))
 
     def select_version(self, config: Config):
         """
@@ -36,16 +36,16 @@ class VersionHandler:
                 c.run(f"git reset --hard {repo.hash}")
 
     def update_repos(self, stage: STAGE_CONSTRAINT):
-        """按照分支，更新 compose 内部的代码
-        """
-        assert stage, 'stage must be exist.'
-        logger.info('update repos ...')
+        """按照分支，更新 compose 内部的代码"""
+        assert stage, "stage must be exist."
+        logger.info("update repos ...")
         from datetime import datetime
+
         c = Context()
         for r in self.repo.submodules:
             with c.cd(r.name):
                 c.run("git reset --hard")
-                logger.info(f'{r.name} pull from {stage}...')
+                logger.info(f"{r.name} pull from {stage}...")
                 c.run(f"git pull origin {stage}")
 
         c.run("git pull")
@@ -54,4 +54,3 @@ class VersionHandler:
             f'git commit --allow-empty -m "feat: update remote repository at {datetime.now().date()}"'
         )
         c.run("git push")
-
