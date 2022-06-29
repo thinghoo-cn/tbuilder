@@ -11,7 +11,7 @@ from .core.httpserver import start_http
 
 def cli():
     parser = argparse.ArgumentParser(description='tbuilder is an application to build image.')
-    parser.add_argument('cmd', choices=['check', 'build', 'save', 'gen', 'show', 'http', 'version', 'update'],
+    parser.add_argument('cmd', choices=['check', 'build', 'save', 'gen', 'checkout', 'show', 'http', 'version', 'update'],
                         help='select one command to run.')
     parser.add_argument('--username', type=str, help='http server username')
     parser.add_argument('--password', type=str, help='http server password')
@@ -40,6 +40,9 @@ def cli():
         if args.cmd == 'check':
             checker.check_hash()
             v_h.show_hash()
+        elif args.cmd == 'checkout':
+            v_h.update_repos(args.stage)
+            v_h.select_version(CONFIG)
         elif args.cmd == 'build':
             checker.check_hash()
             v_h.show_hash()
@@ -52,6 +55,9 @@ def cli():
             logger.info(CONFIG.repo_list)
         elif args.cmd == 'update':
             v_h.update_repos(args.stage)
+        elif args.cmd == 'new':
+            # new version
+            pass
 
 
 if __name__ == '__main__':
