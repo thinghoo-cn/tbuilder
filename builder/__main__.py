@@ -114,6 +114,7 @@ cli.add_command(show)
 cli.add_command(pull)
 cli.add_command(http)
 cli.add_command(version)
+cli.add_command(update)
 
 
 if __name__ == "__main__":
