@@ -3,7 +3,7 @@ from git import Repo
 from invoke import Context
 
 from .conf import Config, logger, STAGE_CONSTRAINT
-from .error import BuilderError, HashInvalidError
+from .entity.version import Version
 
 # repo is a Repo instance pointing to the git-python repository.
 # For all you know, the first argument to Repo is a path to the repository
