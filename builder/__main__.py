@@ -93,8 +93,11 @@ def version():
 
 
 @click.command(help='升级 config.yml 中的版本')
-def update():
-    pass
+@click.option('--stage', type=str, help='the stage of current compose')
+def update(stage):
+    current_repo = get_current_repo()
+    v_h = VersionHandler(current_repo)
+    v_h.update_repos(stage)
 
 
 @click.command(help='根据 config.yml 中的包下载')
