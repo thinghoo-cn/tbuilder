@@ -62,8 +62,8 @@ class Config:
     cache: bool = False
 
     repo_list: Tuple[RepoInstance, RepoInstance] = (
-        RepoInstance(folder="./qms_backend", hash="test", image="app", key="ssh"),
-        RepoInstance(folder="./", hash="test", image="nginx", key="ssh"),
+        RepoInstance(folder="./qms_backend", hash="test", image="app", key="ssh", key_file='~/.netrc'),
+        RepoInstance(folder="./", hash="test", image="nginx", key="ssh", key_file='~/.netrc'),
     )
 
     def get_image_list(self) -> Iterable[str]:
