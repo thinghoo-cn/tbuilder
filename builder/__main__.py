@@ -80,7 +80,7 @@ def pull(stage):
 @click.command(help='start authed http server')
 @click.option('--username', type=str, help='http server username')
 @click.option('--password', type=str, help='http server password')
-@click.option('--port', type=str, help='http server port')
+@click.option('--port', type=int, help='http server port')
 def http(username, password, port):
     start_http(USERNAME=username, PASSWORD=password, port=port)
     sys.exit(0)
