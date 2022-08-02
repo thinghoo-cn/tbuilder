@@ -8,4 +8,5 @@ class RepoInstance:
     hash: str
     image: str
     key: Literal["ssh", "netrc", ""]
+    key_file: str
     name: str = ""

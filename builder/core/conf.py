@@ -18,7 +18,6 @@ if not os.getenv("DEBUG", False):
 EXAMPLE_FILE = """
 name: qms_backend
 version: 0.1.0
-key_file: ~/.ssh/id_rsa
 image_folder: /root/services/images
 prefix: qms-compose
 
@@ -26,10 +25,12 @@ repo_list:
   - name: backend
     folder: ./qms_backend
     hash: test
+    key_file: ~/.ssh/id_rsa
     image: app
     key: true
   - name: frontend
     folder: ./
+    key_file: ~/.ssh/id_rsa
     hash: test
     image: nginx
     key: true
@@ -51,7 +52,6 @@ def get_current_repo() -> Repo:
 @dataclass
 class Config:
     name: str
-    key_file: str
     image_folder: str
     prefix: str
     version: str

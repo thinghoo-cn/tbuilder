@@ -20,9 +20,9 @@ class ImageManager:
 
         # set netrc and ssh key for image authentation.
         if r.key == "netrc":
-            key_param = f'--build-arg netrc="$(cat {self.config.key_file})"'
+            key_param = f'--build-arg netrc="$(cat {r.key_file})"'
         elif r.key == "ssh":
-            key_param = f'--build-arg ssh_prv_key="$(cat {self.config.key_file})"'
+            key_param = f'--build-arg ssh_prv_key="$(cat {r.key_file})"'
         else:
             key_param = ""
 
