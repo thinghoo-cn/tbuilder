@@ -1,6 +1,5 @@
 name: qms_backend
 version: 0.1.0
-key_file: ~/.ssh/id_rsa
 image_folder: /root/services/images
 prefix: qms-compose
 cache: false
@@ -9,12 +8,16 @@ is_tag: true
 
 repo_list:
   - name: backend
-    folder: ./qms_backend
+    build_folder: ./qms_backend
+    code_folder: ./qms_backend
+    key_file: ~/.ssh/id_rsa
     hash: test
     image: app
     key: true
   - name: frontend
-    folder: ./
+    build_folder: ./
+    code_folder: ./qms_frontend
+    key_file: ~/.ssh/id_rsa
     hash: test
     image: app
     key: true

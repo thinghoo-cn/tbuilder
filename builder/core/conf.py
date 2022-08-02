@@ -23,13 +23,15 @@ prefix: qms-compose
 
 repo_list:
   - name: backend
-    folder: ./qms_backend
+    build_folder: ./qms_backend
+    code_folder: ./qms_backend
     hash: test
     key_file: ~/.ssh/id_rsa
     image: app
     key: true
   - name: frontend
-    folder: ./
+    build_folder: ./
+    code_builder: ./qms_frontend
     key_file: ~/.ssh/id_rsa
     hash: test
     image: nginx
@@ -62,8 +64,8 @@ class Config:
     cache: bool = False
 
     repo_list: Tuple[RepoInstance, RepoInstance] = (
-        RepoInstance(folder="./qms_backend", hash="test", image="app", key="ssh", key_file='~/.netrc'),
-        RepoInstance(folder="./", hash="test", image="nginx", key="ssh", key_file='~/.netrc'),
+        RepoInstance(build_folder="./qms_backend", code_folder="", hash="test", image="app", key="ssh", key_file='~/.netrc'),
+        RepoInstance(build_folder="./", code_folder="", hash="test", image="nginx", key="ssh", key_file='~/.netrc'),
     )
 
     def get_image_list(self) -> Iterable[str]:

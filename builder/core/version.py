@@ -32,7 +32,7 @@ class VersionHandler:
         """
         for repo in config.repo_list:
             c = Context()
-            with c.cd(repo.folder):
+            with c.cd(repo.code_folder):
                 c.run(f"git reset --hard {repo.hash}")
 
     def update_repos(self, stage: STAGE_CONSTRAINT):

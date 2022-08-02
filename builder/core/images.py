@@ -40,7 +40,7 @@ class ImageManager:
         """
         for r in self.config.repo_list:
             c = Context()
-            with c.cd(r.folder):
+            with c.cd(r.build_folder):
                 full_cmd = self._gen_cmd(r=r)
                 logger.info("run: " + full_cmd)
                 c.run(full_cmd)

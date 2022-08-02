@@ -4,7 +4,8 @@ from typing import Literal
 
 @dataclass
 class RepoInstance:
-    folder: str
+    code_folder: str
+    build_folder: str
     hash: str
     image: str
     key: Literal["ssh", "netrc", ""]
