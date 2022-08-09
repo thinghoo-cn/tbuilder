@@ -23,6 +23,8 @@ class ImageManager:
             key_param = f'--build-arg netrc="$(cat {r.key_file})"'
         elif r.key == "ssh":
             key_param = f'--build-arg ssh_prv_key="$(cat {r.key_file})"'
+        elif r.key == 'npmrc':
+            key_param = f'--build-arg npmrc="$(cat {r.key_file})"'
         else:
             key_param = ""
 
