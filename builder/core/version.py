@@ -19,7 +19,8 @@ class VersionHandler:
         """
         展示子模块 hash
         """
-        assert not self.repo.bare
+        if not self.repo.bare:
+            raise Exception(f'repo {self.repo} is bare.')
 
         if not self.repo.submodules:
             logger.info("no submodules.")

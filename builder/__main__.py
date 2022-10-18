@@ -66,7 +66,8 @@ def checkout(stage):
 @click.command(help='show the current info')
 def show():
     CONFIG: Config = Config.load_config()
-    logger.info(CONFIG.repo_list)
+    for repo in CONFIG.repo_list:
+        logger.info(repo)
 
 
 @click.command(help='pull the code in branch')
