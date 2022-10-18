@@ -16,7 +16,7 @@ class HashChecker:
         # 检查 module hash 是否相等
         hash_ = sub_r.module().head.commit
         if str(hash_) != config.hash:
-            raise HashInvalidError(f"{hash_} != {config.hash}")
+            raise HashInvalidError(f"submodule {sub_r.name}, {hash_} != {config.hash}")
 
     def check_hash(self):
         """ """
