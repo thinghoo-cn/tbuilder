@@ -11,16 +11,24 @@ Quick builder for images and version.
 ## RUN
 
 ```bash
-usage: __main__.py [-h] {check,build,save,gen,show}
+Usage: tbuilder [OPTIONS] COMMAND [ARGS]...
 
-tbuilder is an application to build image.
+  tbuilder is an application to build image.
 
-positional arguments:
-  {check,build,save,gen,show}
-                        select one command to run.
+Options:
+  --help  Show this message and exit.
 
-optional arguments:
-  -h, --help            show this help message and exit
+Commands:
+  build     build according to the config.yml
+  check     check the git repository
+  checkout  checkout current git repo version.
+  gen       generate config file
+  http      start authed http server
+  pull      pull the code in branch
+  save      save the docker image
+  show      show the current info
+  update    升级 config.yml 中的版本
+  version   show tbuilder version
 ```
 
 ## Documentation
