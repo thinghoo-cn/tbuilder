@@ -2,8 +2,7 @@
 from git import Repo
 from invoke import Context
 
-from .conf import Config, logger, STAGE_CONSTRAINT
-from .entity.version import Version
+from .conf import STAGE_CONSTRAINT, Config, logger
 
 # repo is a Repo instance pointing to the git-python repository.
 # For all you know, the first argument to Repo is a path to the repository
@@ -20,7 +19,7 @@ class VersionHandler:
         展示子模块 hash
         """
         if not self.repo.bare:
-            raise Exception(f'repo {self.repo} is bare.')
+            raise Exception(f"repo {self.repo} is bare.")
 
         if not self.repo.submodules:
             logger.info("no submodules.")
@@ -51,7 +50,5 @@ class VersionHandler:
 
         c.run("git pull")
         c.run("git add .")
-        c.run(
-            f'git commit --allow-empty -m "feat: update remote repository at {datetime.now().date()}"'
-        )
+        c.run(f'git commit --allow-empty -m "feat: update remote repository at {datetime.now().date()}"')
         c.run("git push")

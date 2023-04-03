@@ -1,5 +1,5 @@
 name: qms_backend
-version: 0.1.0
+version: 0.1.0.202304
 image_folder: /root/services/images
 prefix: qms-compose
 cache: false

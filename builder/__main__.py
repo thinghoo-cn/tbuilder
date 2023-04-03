@@ -1,20 +1,20 @@
 import sys
-import argparse
+
 import click
 
-from .core.conf import logger, Config, get_current_repo
-from .core.version import VersionHandler
+from .core.conf import Config, get_current_repo, logger
 from .core.hash_checker import HashChecker
-from .core.images import ImageManager
 from .core.httpserver import start_http
+from .core.images import ImageManager
+from .core.version import VersionHandler
 
 
-@click.group(help='tbuilder is an application to build image.')
+@click.group(help="tbuilder is an application to build image.")
 def cli():
     pass
 
 
-@click.command(help='check the git repository')
+@click.command(help="check the git repository")
 def check():
     CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
@@ -26,7 +26,7 @@ def check():
     v_h.show_hash()
 
 
-@click.command(help='build according to the config.yml')
+@click.command(help="build according to the config.yml")
 def build():
     CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
@@ -40,20 +40,21 @@ def build():
     i_m.build()
 
 
-@click.command(help='save the docker image')
+@click.command(help="save the docker image")
 def save():
     CONFIG: Config = Config.load_config()
     i_m = ImageManager(config=CONFIG)
     i_m.save()
 
-@click.command(help='generate config file')
+
+@click.command(help="generate config file")
 def gen():
     CONFIG: Config = Config.load_config()
     CONFIG.gen()
 
 
-@click.command(help='checkout current git repo version.')
-@click.option('--stage', type=str, help='the stage of current compose')
+@click.command(help="checkout current git repo version.")
+@click.option("--stage", type=str, help="the stage of current compose")
 def checkout(stage):
     CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
@@ -63,32 +64,31 @@ def checkout(stage):
     v_h.select_version(CONFIG)
 
 
-@click.command(help='show the current info')
+@click.command(help="show the current info")
 def show():
     CONFIG: Config = Config.load_config()
     for repo in CONFIG.repo_list:
         logger.info(repo)
 
 
-@click.command(help='pull the code in branch')
-@click.option('--stage', type=str, help='the stage of current compose')
+@click.command(help="pull the code in branch")
+@click.option("--stage", type=str, help="the stage of current compose")
 def pull(stage):
     current_repo = get_current_repo()
     v_h = VersionHandler(current_repo)
     v_h.update_repos(stage)
 
 
-@click.command(help='start authed http server')
-@click.option('--username', type=str, help='http server username')
-@click.option('--password', type=str, help='http server password')
-@click.option('--port', type=int, help='http server port')
+@click.command(help="start authed http server")
+@click.option("--username", type=str, help="http server username")
+@click.option("--password", type=str, help="http server password")
+@click.option("--port", type=int, help="http server port")
 def http(username, password, port):
     start_http(USERNAME=username, PASSWORD=password, port=port)
     sys.exit(0)
 
 
-
-@click.command(help='show tbuilder version')
+@click.command(help="show tbuilder version")
 def version():
     import pkg_resources
 
@@ -96,15 +96,15 @@ def version():
     logger.info(f"tbuilder(builder) version is: {builder[0].version}")
 
 
-@click.command(help='升级 config.yml 中的版本')
-@click.option('--stage', type=str, help='the stage of current compose')
+@click.command(help="升级 config.yml 中的版本")
+@click.option("--stage", type=str, help="the stage of current compose")
 def update(stage):
     current_repo = get_current_repo()
     v_h = VersionHandler(current_repo)
     v_h.update_repos(stage)
 
 
-@click.command(help='根据 config.yml 中的包下载')
+@click.command(help="根据 config.yml 中的包下载")
 def download():
     pass
 
