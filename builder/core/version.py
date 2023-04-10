@@ -10,9 +10,9 @@ from .conf import STAGE_CONSTRAINT, Config, logger
 
 
 class VersionHandler:
-    def __init__(self, repo: Repo) -> None:
+    def __init__(self, repo: Repo, config: Config) -> None:
         self.repo = repo
-        pass
+        self.config: Config = config
 
     def show_hash(self):
         """
@@ -44,6 +44,8 @@ class VersionHandler:
         c = Context()
         for r in self.repo.submodules:
             with c.cd(r.name):
+                # remove files not in git.
+                c.run('git clean -f -d')
                 c.run("git reset --hard")
                 logger.info(f"{r.name} pull from {stage}...")
                 c.run(f"git pull origin {stage}")

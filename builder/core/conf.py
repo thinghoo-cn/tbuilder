@@ -110,5 +110,10 @@ class Config:
             image_path.mkdir()
         return image_path
 
+    def write_back(self):
+        """将变化写回 config.yml"""
+        with open('./config.yml', 'w') as f:
+            yaml.dump(self.to_dict(), f)
+
 
 image_registry = "harbor.beijing-epoch.com"

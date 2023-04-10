@@ -74,8 +74,9 @@ def show():
 @click.command(help="pull the code in branch, and update the config.yml")
 @click.option("--stage", type=str, help="the stage of current compose")
 def pull(stage):
+    CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
-    v_h = VersionHandler(current_repo)
+    v_h = VersionHandler(current_repo, CONFIG)
     v_h.update_repos(stage)
 
 
