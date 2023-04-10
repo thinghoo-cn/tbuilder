@@ -10,13 +10,13 @@ repo_list:
     code_folder: ./e-mes-frontend
     build_folder: ./
     key_file: ~/.ssh/id_ed25519
-    hash: 7e915eb330d0a5ffa66fbf172aa7243a26abc22e
+    hash: 414fff7afb622bf052750ffa61cf350d13b2b15f
     image: nginx
     key: ssh
   - name: e-mes-backend
     code_folder: ./e-mes-backend
     build_folder: ./e-mes-backend
-    hash: 95f2867e35a3262413d35f89b83239826118845d
+    hash: 7fee9d47ec0b254f980bf624f48e2b31bc919951
     key_file: ~/.netrc
     image: app
     key: netrc

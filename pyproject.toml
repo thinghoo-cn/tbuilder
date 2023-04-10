@@ -22,3 +22,8 @@ tbuilder = "builder.__main__:cli"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "thinghoo"
+url = "https://nexus.beijing-epoch.com/repository/pypi-thinghoo-group/simple"
+default = true

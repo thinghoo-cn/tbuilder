@@ -93,7 +93,7 @@ def version():
     import pkg_resources
 
     builder = pkg_resources.require("builder")
-    logger.info(f"tbuilder(builder) version is: {builder[0].version}")
+    print(f"tbuilder(builder) version is: {builder[0].version}")
 
 
 @click.command(help="升级 config.yml 中的版本")

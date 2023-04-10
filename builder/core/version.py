@@ -18,7 +18,7 @@ class VersionHandler:
         """
         展示子模块 hash
         """
-        if not self.repo.bare:
+        if self.repo.bare:
             raise Exception(f"repo {self.repo} is bare.")
 
         if not self.repo.submodules:
