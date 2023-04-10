@@ -80,6 +80,15 @@ def pull(stage):
     v_h.update_repos(stage)
 
 
+@click.command(help='push current update to remote')
+@click.option("--stage", type=str, help="the stage of current compose")
+def push():
+    CONFIG: Config = Config.load_config()
+    current_repo = get_current_repo()
+    v_h = VersionHandler(current_repo, CONFIG)
+    v_h.push_repo()
+
+
 @click.command(help="start authed http server")
 @click.option("--username", type=str, help="http server username")
 @click.option("--password", type=str, help="http server password")
@@ -100,8 +109,9 @@ def version():
 @click.command(help="update the version and hash from config.yml")
 @click.option("--stage", type=str, help="the stage of current compose")
 def update(stage):
+    CONFIG = Config.load_config()
     current_repo = get_current_repo()
-    v_h = VersionHandler(current_repo)
+    v_h = VersionHandler(current_repo, config=CONFIG)
     v_h.update_repos(stage)
 
 
@@ -120,6 +130,7 @@ cli.add_command(pull)
 cli.add_command(http)
 cli.add_command(version)
 cli.add_command(update)
+cli.add_command(push)
 
 
 if __name__ == "__main__":

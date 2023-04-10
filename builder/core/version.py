@@ -39,7 +39,6 @@ class VersionHandler:
         """按照分支，更新 compose 内部的代码"""
         assert stage, "stage must be exist."
         logger.info("update repos ...")
-        from datetime import datetime
 
         c = Context()
         for r in self.repo.submodules:
@@ -50,6 +49,17 @@ class VersionHandler:
                 logger.info(f"{r.name} pull from {stage}...")
                 c.run(f"git pull origin {stage}")
 
+        # 获取 commit hash，写入 config.yml
+        for r in self.config.repo_list:
+            repo = Repo(r.code_folder)
+            r.hash = str(repo.commit())
+        self.config.write_back()
+        self.push_repo()
+
+    def push_repo(self):
+        """将当前 compose 更新到远程"""
+        from datetime import datetime
+        c = Context()
         c.run("git pull")
         c.run("git add .")
         c.run(f'git commit --allow-empty -m "feat: update remote repository at {datetime.now().date()}"')
