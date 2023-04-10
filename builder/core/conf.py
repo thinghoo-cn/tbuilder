@@ -84,8 +84,8 @@ class Config:
     def load_config(cls) -> "Config":
         config_path = pathlib.Path("./config.yml")
         if not config_path.exists():
-            logger.critical("config.yml not exist. generate!")
-            cls.gen()
+            logger.critical("config.yml not exist!")
+            sys.exit(-1)
         with config_path.open() as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
         return Config.from_dict(data)

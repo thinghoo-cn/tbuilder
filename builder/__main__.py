@@ -96,7 +96,7 @@ def version():
     print(f"tbuilder(builder) version is: {builder[0].version}")
 
 
-@click.command(help="升级 config.yml 中的版本")
+@click.command(help="update the version and hash from config.yml")
 @click.option("--stage", type=str, help="the stage of current compose")
 def update(stage):
     current_repo = get_current_repo()
