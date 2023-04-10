@@ -8,7 +8,10 @@ def test_load_config():
 
 
 def test_write_back():
+    import shutil
     from datetime import datetime
+
+    shutil.copy('./config-example.yml', './config.yml')
     c: Config = Config.load_config()
     mydate = datetime.now().date()
     c.name = f'{mydate}-{c.name}'

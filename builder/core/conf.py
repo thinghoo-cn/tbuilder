@@ -1,8 +1,8 @@
 import os
 import pathlib
 import sys
-from dataclasses import dataclass
-from typing import Iterable, Tuple, List, Literal
+from dataclasses import dataclass, asdict
+from typing import Iterable, OrderedDict, Tuple, List, Literal
 
 import yaml
 from dataclasses_json import dataclass_json
@@ -110,10 +110,23 @@ class Config:
             image_path.mkdir()
         return image_path
 
+    def to_ordered_dict(self):
+        od = {}
+        od['name'] = self.name
+        od['version']= self.version
+        od['image_folder'] = self.image_folder
+        od['prefix'] = self.prefix
+        od['cache'] = self.cache
+        od['is_save_local'] = self.is_save_local
+        od['repo_list'] = [asdict(x) for x in self.repo_list]
+        return od
+
     def write_back(self):
         """将变化写回 config.yml"""
+        # data = self.to_ordered_dict()
+        data = self.to_ordered_dict()
         with open('./config.yml', 'w') as f:
-            yaml.dump(self.to_dict(), f)
+            yaml.dump(data, f, sort_keys=False, default_flow_style=False)
 
 
 image_registry = "harbor.beijing-epoch.com"
