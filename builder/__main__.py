@@ -71,7 +71,7 @@ def show():
         logger.info(repo)
 
 
-@click.command(help="pull the code in branch")
+@click.command(help="pull the code in branch, and update the config.yml")
 @click.option("--stage", type=str, help="the stage of current compose")
 def pull(stage):
     current_repo = get_current_repo()
