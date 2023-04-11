@@ -6,7 +6,7 @@ from .core.conf import Config, get_current_repo, logger
 from .core.hash_checker import HashChecker
 from .core.httpserver import start_http
 from .core.images import ImageManager
-from .core.version import SourceCodeManager
+from .core.manager import SourceCodeManager
 
 
 @click.group(help="tbuilder is an application to build image.")
