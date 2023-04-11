@@ -16,9 +16,9 @@ class SourceCodeManager:
 
     def clone(self):
         c = Context()
-        for r in self.repo.submodules:
+        for r in self.config.repo_list:
             with c.cd(r.name):
-                c.run('git clone {}')
+                c.run(f'git clone {r.repo_url} {r.code_folder}')
 
     def show_hash(self):
         """
@@ -53,6 +53,8 @@ class SourceCodeManager:
                 c.run('git clean -f -d')
                 c.run("git reset --hard")
                 logger.info(f"{r.name} pull from {stage}...")
+
+                # stage is branch.
                 c.run(f"git pull origin {stage}")
 
         # 获取 commit hash，写入 config.yml
