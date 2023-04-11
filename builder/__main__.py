@@ -20,7 +20,7 @@ def check():
     current_repo = get_current_repo()
 
     checker = HashChecker(current_repo, config=CONFIG)
-    v_h = VersionHandler(current_repo)
+    v_h = VersionHandler(current_repo, config=CONFIG)
 
     checker.check_hash()
     v_h.show_hash()
@@ -32,7 +32,7 @@ def build():
     current_repo = get_current_repo()
 
     checker = HashChecker(current_repo, config=CONFIG)
-    v_h = VersionHandler(current_repo)
+    v_h = VersionHandler(current_repo, config=CONFIG)
     i_m = ImageManager(config=CONFIG)
 
     checker.check_hash()
@@ -58,7 +58,7 @@ def gen():
 def checkout(stage):
     CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
-    v_h = VersionHandler(current_repo)
+    v_h = VersionHandler(current_repo, config=CONFIG)
 
     v_h.update_repos(stage)
     v_h.select_version(CONFIG)
@@ -80,8 +80,13 @@ def pull(stage):
     v_h.update_repos(stage)
 
 
+@click.command(help='clone the repo in the repo list')
+@click.option('--stage', type=str, help='the stage of current compose')
+def clone(stage: str):
+    pass
+
+
 @click.command(help='push current update to remote')
-@click.option("--stage", type=str, help="the stage of current compose")
 def push():
     CONFIG: Config = Config.load_config()
     current_repo = get_current_repo()
@@ -131,6 +136,7 @@ cli.add_command(http)
 cli.add_command(version)
 cli.add_command(update)
 cli.add_command(push)
+cli.add_command(clone)
 
 
 if __name__ == "__main__":
