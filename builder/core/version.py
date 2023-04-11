@@ -9,10 +9,16 @@ from .conf import STAGE_CONSTRAINT, Config, logger
 # you want to work with
 
 
-class VersionHandler:
+class SourceCodeManager:
     def __init__(self, repo: Repo, config: Config) -> None:
         self.repo = repo
         self.config: Config = config
+
+    def clone(self):
+        c = Context()
+        for r in self.repo.submodules:
+            with c.cd(r.name):
+                c.run('git clone {}')
 
     def show_hash(self):
         """
@@ -26,11 +32,11 @@ class VersionHandler:
         for r in self.repo.submodules:
             logger.info(r.name + ": " + str(r.module().head.commit))
 
-    def select_version(self, config: Config):
+    def select_version(self):
         """
         调整子模块版本
         """
-        for repo in config.repo_list:
+        for repo in self.config.repo_list:
             c = Context()
             with c.cd(repo.code_folder):
                 c.run(f"git reset --hard {repo.hash}")
