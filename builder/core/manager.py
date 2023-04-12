@@ -49,7 +49,7 @@ class SourceCodeManager:
         c = Context()
         for r in self.repo.submodules:
             if r.active_branch.name != stage:
-                print(f'compose repo: {r.active_branch.name} is not equal to {stage}.')
+                print(f'compose repo<{r.name}>: {r.active_branch.name} is not equal to {stage}.')
                 sys.exit(-1)
             with c.cd(r.name):
                 # remove files not in git.
