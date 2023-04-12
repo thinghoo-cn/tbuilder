@@ -1,0 +1,11 @@
+# for mes-compose-2 test
+
+version: "3.0"
+
+services:
+  - name: mes
+    host: 123.249.19.172
+    prefix: /home/svtter
+    stages:
+      - name: test
+        path: /root/work/tbuilder/example/mes-compose-2

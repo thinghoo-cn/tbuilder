@@ -17,8 +17,7 @@ class SourceCodeManager:
     def clone(self):
         c = Context()
         for r in self.config.repo_list:
-            with c.cd(r.name):
-                c.run(f'git clone {r.repo_url} {r.code_folder}')
+            c.run(f'git clone {r.repo_url} {r.code_folder}')
 
     def show_hash(self):
         """
