@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 from git import Repo
 from invoke import Context
 
@@ -47,6 +48,9 @@ class SourceCodeManager:
 
         c = Context()
         for r in self.repo.submodules:
+            if r.active_branch.name != stage:
+                print(f'compose repo: {r.active_branch.name} is not equal to {stage}.')
+                sys.exit(-1)
             with c.cd(r.name):
                 # remove files not in git.
                 c.run('git clean -f -d')
