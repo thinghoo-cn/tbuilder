@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 from git import Repo
 from invoke import Context
 
@@ -51,6 +52,10 @@ class SourceCodeManager:
             if r.active_branch.name != stage:
                 print(f'compose repo<{r.name}>: {r.active_branch.name} is not equal to {stage}.')
                 sys.exit(-1)
+            if os.path.exists(r.name):
+                print(f'repo<{r.name}> is not exist.')
+                sys.exit(-1)
+
             with c.cd(r.name):
                 # remove files not in git.
                 c.run('git clean -f -d')
@@ -62,6 +67,10 @@ class SourceCodeManager:
 
         # 获取 commit hash，写入 config.yml
         for r in self.config.repo_list:
+            if not os.path.exists(r.code_folder):
+                print(f'repo <{r.code_folder}> is not exist')
+                sys.exit(-1)
+
             repo = Repo(r.code_folder)
             r.hash = str(repo.commit())
         self.config.write_back()
