@@ -4,6 +4,8 @@ import os
 from git import Repo
 from invoke import Context
 
+from builder.core.entity.repo_instance import RepoInstance
+
 from .conf import Config, logger
 
 # repo is a Repo instance pointing to the git-python repository.
@@ -42,33 +44,55 @@ class SourceCodeManager:
             with c.cd(repo.code_folder):
                 c.run(f"git reset --hard {repo.hash}")
 
+    def pull_from_remote(self, c: Context, r: Repo, stage: str):
+        """
+        git pull code from remote repository, with branch {stage}.
+        """
+        with c.cd(r.name):
+            # remove files not in git.
+            c.run('git clean -f -d')
+            c.run("git reset --hard")
+
+            # check remote branch
+            if not stage in r.remote().refs:
+                print(f'ERROR: {stage} is not exist in {r.remote()}')
+                sys.exit(-1)
+            logger.info(f"{r.name} pull from {stage}...")
+            # stage is branch.
+            c.run(f"git pull origin {stage}")
+
+    def check_stage(self, r: Repo, stage: str):
+        """ check the git repository branch ~?= stage"""
+        if r.active_branch.name != stage:
+            # r has no name
+            err_msg = f'ERROR: compose repo<{r.name}>: {r.active_branch.name} is not equal to {stage}.'
+            print(err_msg, file=sys.stderr)
+            sys.exit(-1)
+
+    def check_folder(self, repo: RepoInstance):
+        """ check the code_folder of repo exist or not"""
+        if not os.path.exists(repo.code_folder):
+            err_msg = f'ERROR: repo<{repo.name}> is not exist.'
+            print(err_msg, file=sys.stderr)
+            sys.exit(-1)
+
     def update_repos(self, stage):
         """按照分支，更新 compose 内部的代码"""
         assert stage, "stage must be exist."
         logger.info("update repos ...")
 
         c = Context()
-        for r in self.repo.submodules:
-            if r.active_branch.name != stage:
-                print(f'compose repo<{r.name}>: {r.active_branch.name} is not equal to {stage}.')
-                sys.exit(-1)
-            if os.path.exists(r.name):
-                print(f'repo<{r.name}> is not exist.')
-                sys.exit(-1)
-
-            with c.cd(r.name):
-                # remove files not in git.
-                c.run('git clean -f -d')
-                c.run("git reset --hard")
-                logger.info(f"{r.name} pull from {stage}...")
-
-                # stage is branch.
-                c.run(f"git pull origin {stage}")
+        for repo in self.config.repo_list:
+            self.check_folder(repo)
+            r = Repo(repo.code_folder)
+            r.name = repo.name
+            self.check_stage(r, stage)
+            self.pull_from_remote(c, r, stage)
 
         # 获取 commit hash，写入 config.yml
         for r in self.config.repo_list:
             if not os.path.exists(r.code_folder):
-                print(f'repo <{r.code_folder}> is not exist')
+                print(f'ERROR: repo <{r.code_folder}> is not exist')
                 sys.exit(-1)
 
             repo = Repo(r.code_folder)
