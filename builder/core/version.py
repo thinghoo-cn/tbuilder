@@ -2,7 +2,7 @@
 from git import Repo
 from invoke import Context
 
-from .conf import STAGE_CONSTRAINT, Config, logger
+from .conf import Config, logger
 
 # repo is a Repo instance pointing to the git-python repository.
 # For all you know, the first argument to Repo is a path to the repository
@@ -35,7 +35,7 @@ class VersionHandler:
             with c.cd(repo.code_folder):
                 c.run(f"git reset --hard {repo.hash}")
 
-    def update_repos(self, stage: STAGE_CONSTRAINT):
+    def update_repos(self, stage):
         """按照分支，更新 compose 内部的代码"""
         assert stage, "stage must be exist."
         logger.info("update repos ...")
