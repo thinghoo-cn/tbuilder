@@ -18,7 +18,7 @@ class Version:
                 start = i + 1
 
         v.append(int(content[start:]))
-        assert len(v) == 4
+        assert len(v) == 4, v
         return Version(v[0], v[1], v[2], v[3])
 
     def get_full(self, split=".") -> str:

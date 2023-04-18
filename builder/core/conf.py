@@ -1,8 +1,8 @@
 import os
 import pathlib
 import sys
-from dataclasses import dataclass
-from typing import Iterable, Tuple, List, Literal
+from dataclasses import dataclass, asdict
+from typing import Iterable, OrderedDict, Tuple, List, Literal
 
 import yaml
 from dataclasses_json import dataclass_json
@@ -62,8 +62,8 @@ class Config:
     cache: bool = False
 
     repo_list: Tuple[RepoInstance, RepoInstance] = (
-        RepoInstance(build_folder="./qms_backend", code_folder="", hash="test", image="app", key="ssh", key_file='~/.netrc'),
-        RepoInstance(build_folder="./", code_folder="", hash="test", image="nginx", key="ssh", key_file='~/.netrc'),
+        RepoInstance(build_folder="./qms_backend", code_folder="", hash="test", image="app", key="ssh", key_file='~/.netrc', repo_url='test'),
+        RepoInstance(build_folder="./", code_folder="", hash="test", image="nginx", key="ssh", key_file='~/.netrc', repo_url='test'),
     )
 
     def get_image_list(self) -> Iterable[str]:
@@ -107,6 +107,24 @@ class Config:
         if not image_path.exists():
             image_path.mkdir()
         return image_path
+
+    def to_ordered_dict(self):
+        od = {}
+        od['name'] = self.name
+        od['version']= self.version
+        od['image_folder'] = self.image_folder
+        od['prefix'] = self.prefix
+        od['cache'] = self.cache
+        od['is_save_local'] = self.is_save_local
+        od['repo_list'] = [asdict(x) for x in self.repo_list]
+        return od
+
+    def write_back(self):
+        """将变化写回 config.yml"""
+        # data = self.to_ordered_dict()
+        data = self.to_ordered_dict()
+        with open('./config.yml', 'w') as f:
+            yaml.dump(data, f, sort_keys=False, default_flow_style=False)
 
 
 image_registry = "harbor.beijing-epoch.com"

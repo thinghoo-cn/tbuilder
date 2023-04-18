@@ -4,6 +4,7 @@ from typing import Literal
 
 @dataclass
 class RepoInstance:
+    repo_url: str
     code_folder: str
     build_folder: str
     hash: str

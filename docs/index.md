@@ -12,21 +12,24 @@ Tbuilder is a tool to quick build images for deployment.
 ## Usage
 
 ```
-usage: tbuilder [-h] [--username USERNAME] [--password PASSWORD] [--port PORT] [--stage {master,test,prd,demo,dev}]
-                {check,build,save,gen,show,http,version,update}
+Usage: tbuilder [OPTIONS] COMMAND [ARGS]...
 
-tbuilder is an application to build image.
+  tbuilder is an application to build image.
 
-positional arguments:
-  {check,build,save,gen,show,http,version,update}
-                        select one command to run.
+Options:
+  --help  Show this message and exit.
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --username USERNAME   http server username
-  --password PASSWORD   http server password
-  --port PORT           http server port.
-  --stage {master,test,prd,demo,dev}
-                        stage information.
-
+Commands:
+  build     build according to the config.yml
+  check     check the git repository
+  checkout  checkout current git repo version.
+  clone     clone the repo in the repo list
+  gen       generate config file
+  http      start authed http server
+  pull      pull the code in branch, and update the config.yml
+  push      push current update to remote
+  save      save the docker image
+  show      show the current info
+  update    update the version and hash from config.yml
+  version   show tbuilder version
 ```
