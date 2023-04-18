@@ -23,12 +23,14 @@ Commands:
   build     build according to the config.yml
   check     check the git repository
   checkout  checkout current git repo version.
+  clone     clone the repo in the repo list
   gen       generate config file
   http      start authed http server
-  pull      pull the code in branch
+  pull      pull the code in branch, and update the config.yml
+  push      push current update to remote
   save      save the docker image
   show      show the current info
-  update    升级 config.yml 中的版本
+  update    update the version and hash from config.yml
   version   show tbuilder version
 ```
 
