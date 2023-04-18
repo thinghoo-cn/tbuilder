@@ -7,7 +7,17 @@ Check the [roadmap](./docs/roadmap.md) to know the new features.
 
 ## Install
 
-`pip install -e .`
+```bash
+# from nexus
+pip install tbuilder
+
+# install 1.*
+pip install "tbuilder<2.0"
+
+# install 2.*
+pip install "tbuilder<3.0"
+```
+
 
 ## RUN
 
