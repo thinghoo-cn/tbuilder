@@ -38,8 +38,6 @@ repo_list:
     key: true
 """
 
-STAGE_CONSTRAINT = Literal["master", "test", "prd", "demo", "dev"]
-
 
 def get_current_repo() -> Repo:
     try:

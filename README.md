@@ -3,6 +3,7 @@
 > 注意⚠️：本项目开源并遵从 MIT 协议。
 
 Quick builder for images and version.
+Check the [roadmap](./docs/roadmap.md) to know the new features.
 
 ## Install
 
