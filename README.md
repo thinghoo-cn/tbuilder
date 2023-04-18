@@ -19,7 +19,7 @@ pip install "tbuilder<3.0"
 ```
 
 
-## RUN
+## USAGE
 
 ```bash
 Usage: tbuilder [OPTIONS] COMMAND [ARGS]...
